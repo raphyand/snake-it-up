@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import pygame
+import pdb
 import event_manager
 from player import Player
 #from scene import Scene
@@ -35,13 +36,12 @@ def main():
 	turn_off = False
 	while turn_off is False: 
 		for event in pygame.event.get():
+			print(event)
 			player.process_events(event)
 			turn_off = event_manager.process_events_exit(event)
 		if turn_off is None:
 			turn_off = False
 		
-
-
 		player.draw()
 
 
