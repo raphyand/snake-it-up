@@ -25,10 +25,13 @@ def main():
 	clock = pygame.time.Clock()
 	#clock = pygame.time.clock(60)
 	screen = pygame.display.set_mode(window_size)
+	background_color = (120, 120, 150)
 	background = pygame.Surface(screen.get_size())
+	background.fill(background_color)
 	#player = pygame.Rect(400, 400, 25, 25)
-	player = Player(screen, pygame.Rect(400, 400, 25, 25))
+	player = Player(screen, pygame.Rect(400, 400, 25, 25), background_color)
 
+	screen.blit(background, (0,0))
 	turn_off = False
 	while turn_off is False: 
 		for event in pygame.event.get():
