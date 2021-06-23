@@ -40,17 +40,11 @@ class Player:
         self._previous_event = event
 
     def process_events(self, event):
-        #repeat = False
         pygame.event.clear()
         pygame.event.set_blocked([pygame.MOUSEMOTION, pygame.KEYUP])
-        #pygame.event.set_allowed([pygame.KEYDOWN])
-        #pdb.set_trace()
-        #self.move_down()
-        #pygame.key.set_repeat(1)
         if event == None:
             print("None")
         if event.type == pygame.KEYDOWN:
-        #while event.type == pygame.KEYDOWN:
             print("A key has been pressed.")
             self.set_previous_key(event.key)
             self.set_previous_event(event)
@@ -69,32 +63,20 @@ class Player:
             time.sleep(.000001)
 
         if self.get_previous_key() == pygame.K_w:
-            #time.sleep(.1)
             pygame.event.post(self.get_previous_event())
             self.move_up()
-            #pygame.event.clear()
         
         if self.get_previous_key() == pygame.K_a:
-            #time.sleep(.1)
             pygame.event.post(self.get_previous_event())
             self.move_left()
-            #pygame.event.clear()
 
         if self.get_previous_key() == pygame.K_s:
-            #time.sleep(.1)
             pygame.event.post(self.get_previous_event())
             self.move_down()
-            #pygame.event.clear()
 
         if self.get_previous_key() == pygame.K_d:
-            #time.sleep(.1)
             pygame.event.post(self.get_previous_event())
             self.move_right()
-            #pygame.event.clear()
-
-        #if pygame.event.post(self.get_previous_event()) is not None:
-        #    pygame.event.post(self.get_previous_event())
-
 
     # Draw cyan for now
     def draw(self):
