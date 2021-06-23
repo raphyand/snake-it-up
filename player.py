@@ -60,7 +60,7 @@ class Player:
             if event.key == pygame.K_d:
                 print("Move right")
                 self.move_right()
-            time.sleep(.000001)
+            time.sleep(.00001)
 
         if self.get_previous_key() == pygame.K_w:
             pygame.event.post(self.get_previous_event())

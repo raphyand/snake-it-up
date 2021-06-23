@@ -32,7 +32,8 @@ def main():
 	background.fill(background_color)
 	#player = pygame.Rect(400, 400, 25, 25)
 	player = Player(screen, pygame.Rect(400, 400, 25, 25), background_color)
-
+	player2 = Player(screen, pygame.Rect(400, 450, 25, 25), background_color)
+	
 	screen.blit(background, (0,0))
 	turn_off = False
 	while turn_off is False: 
@@ -41,12 +42,13 @@ def main():
 		for event in pygame.event.get():
 			print(event)
 			player.process_events(event)
+			#player2.process_events(event)
 			turn_off = event_manager.process_events_exit(event)
 		if turn_off is None:
 			turn_off = False
 		
 		player.draw()
-
+		#player2.draw()
 
 		#pygame.draw.rect(screen, (0, 255, 255), player)
 		#pygame.display.flip()
