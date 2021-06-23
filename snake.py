@@ -24,6 +24,7 @@ def main():
 	#display_info()
 	window_size = (800, 800)
 	clock = pygame.time.Clock()
+
 	#clock = pygame.time.clock(60)
 	screen = pygame.display.set_mode(window_size)
 	background_color = (120, 120, 150)
@@ -35,6 +36,8 @@ def main():
 	screen.blit(background, (0,0))
 	turn_off = False
 	while turn_off is False: 
+		#print(clock.tick(60))
+		clock.tick(60)
 		for event in pygame.event.get():
 			print(event)
 			player.process_events(event)

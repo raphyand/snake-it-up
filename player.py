@@ -9,6 +9,7 @@ class Player:
         self._player_bounds = rect
         self._player = pygame.Rect(rect)
         self._background_color = background_color
+        self._previous_event = None
         self._previous_key = None
 
     def get_screen_to_render(self):
@@ -26,21 +27,33 @@ class Player:
     def get_previous_key(self):
         return self._previous_key
 
+    def get_previous_event(self):
+        return self._previous_event
+
     def set_player(self, player):
         self._player = player
 
     def set_previous_key(self, key):
         self._previous_key = key
 
+    def set_previous_event(self, event):
+        self._previous_event = event
+
     def process_events(self, event):
         #repeat = False
+        pygame.event.clear()
         pygame.event.set_blocked([pygame.MOUSEMOTION, pygame.KEYUP])
+        #pygame.event.set_allowed([pygame.KEYDOWN])
         #pdb.set_trace()
         #self.move_down()
+        #pygame.key.set_repeat(1)
+        if event == None:
+            print("None")
         if event.type == pygame.KEYDOWN:
         #while event.type == pygame.KEYDOWN:
             print("A key has been pressed.")
             self.set_previous_key(event.key)
+            self.set_previous_event(event)
             if event.key == pygame.K_w:
                 print("Move up")
                 self.move_up()
@@ -53,18 +66,35 @@ class Player:
             if event.key == pygame.K_d:
                 print("Move right")
                 self.move_right()
+            time.sleep(.000001)
 
         if self.get_previous_key() == pygame.K_w:
+            #time.sleep(.1)
+            pygame.event.post(self.get_previous_event())
             self.move_up()
+            #pygame.event.clear()
         
         if self.get_previous_key() == pygame.K_a:
+            #time.sleep(.1)
+            pygame.event.post(self.get_previous_event())
             self.move_left()
+            #pygame.event.clear()
 
         if self.get_previous_key() == pygame.K_s:
+            #time.sleep(.1)
+            pygame.event.post(self.get_previous_event())
             self.move_down()
+            #pygame.event.clear()
 
         if self.get_previous_key() == pygame.K_d:
+            #time.sleep(.1)
+            pygame.event.post(self.get_previous_event())
             self.move_right()
+            #pygame.event.clear()
+
+        #if pygame.event.post(self.get_previous_event()) is not None:
+        #    pygame.event.post(self.get_previous_event())
+
 
     # Draw cyan for now
     def draw(self):
@@ -75,34 +105,34 @@ class Player:
         player = self.get_player()
         #delete_player = pygame.Rect((self.get_screen_to_render, (0, 0, 0), player.get_player_bounds))
         pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
-        self.set_player(player.move(0, -5))
+        self.set_player(player.move(0, -1))
         pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
         #self.print_info()
-        pygame.display.update()
+        pygame.display.update(player)
 
     def move_left(self):
         player = self.get_player()
         pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
-        self.set_player(player.move(-5, 0))
+        self.set_player(player.move(-1, 0))
         pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
         #self.print_info()
-        pygame.display.update()    
+        pygame.display.update(player)    
 
     def move_down(self):
         player = self.get_player()
         pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
-        self.set_player(player.move(0, 5))
+        self.set_player(player.move(0, 1))
         pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
         #self.print_info()
-        pygame.display.update()    
+        pygame.display.update(player)    
 
     def move_right(self):
         player = self.get_player()
         pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
-        self.set_player(player.move(5, 0))
+        self.set_player(player.move(1, 0))
         pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
         #self.print_info()
-        pygame.display.update()           
+        pygame.display.update(player)           
 
 
     def print_info(self):
