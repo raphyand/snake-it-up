@@ -2,8 +2,10 @@
 import pygame
 import pdb
 import event_manager
+import rgbcolors
 from player import Player
 #from scene import Scene
+# Note: Everything in Pygame is a rect
 
 def display_info():
 	print('The display is using the "{}"driver.'.format(pygame.display.get_driver()))
@@ -23,24 +25,27 @@ def main():
 	pygame.init()
 	#display_info()
 	window_size = (800, 800)
+	# 768, 768 for the playable perimiter
 	clock = pygame.time.Clock()
 
 	#clock = pygame.time.clock(60)
 	screen = pygame.display.set_mode(window_size)
-	background_color = (120, 120, 150)
+	#background_color = (120, 120, 150)
+	background_color = rgbcolors.purple1
 	background = pygame.Surface(screen.get_size())
+	#background = pygame.Surface((768, 768))
 	background.fill(background_color)
 	#player = pygame.Rect(400, 400, 25, 25)
-	player = Player(screen, pygame.Rect(400, 400, 25, 25), background_color)
+	player = Player(screen, pygame.Rect(400, 400, 32, 32), background_color)
 	player2 = Player(screen, pygame.Rect(400, 450, 25, 25), background_color)
 	
 	screen.blit(background, (0,0))
 	turn_off = False
 	while turn_off is False: 
 		#print(clock.tick(60))
-		clock.tick(60)
+		clock.tick(30)
 		for event in pygame.event.get():
-			print(event)
+			#print(event)
 			player.process_events(event)
 			#player2.process_events(event)
 			turn_off = event_manager.process_events_exit(event)
@@ -50,13 +55,8 @@ def main():
 		player.draw()
 		#player2.draw()
 
-		#pygame.draw.rect(screen, (0, 255, 255), player)
-		#pygame.display.flip()
-		#background = background.convert()
-		#background.blit(player, 0)
-		#screen.blit(background, (0,0))
-		
 
+	#Professor's code____________
 	#title = 'Snake++'
 	#pygame.display.set_caption(title)
 

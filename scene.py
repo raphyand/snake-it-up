@@ -1,6 +1,7 @@
 
 import pygame
 import rgbcolors
+from score import TimerScore
 
 class Scene:
     def __init__(self, scene_id, screen, background_color=rgbcolors.springgreen1):
@@ -90,3 +91,27 @@ class BlinkingTitle(TitleScene):
         self._title = title_font.render(self._title_text, True, title_color)
 
         self._screen.blit(self._title, self._title_pos)
+
+
+class LevelScene(Scene):
+    def __init__(self, scene_id, screen, background_color=rgbcolors.springgreen1, player):
+        super().__init__(scene_id, screen, background_color)
+        self._player = player
+        self._score = TimerScore()
+    def draw(self):
+        super().draw()
+        self._player.draw()
+        print('The score is {}'.format(self._score))
+
+    def process_event(self, event):
+        if event.type == pygame.QUIT:
+            print('Good bye!')
+            self.set_not_valid()
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self.set_not_valid()
+
+    def update(self):
+        self._player.update()
+        if self._player.is_self_intersecting()
+            print("You collided with yourself!")
+        self._score.click()
