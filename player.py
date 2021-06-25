@@ -4,30 +4,62 @@ import pdb
 import rgbcolors
 from pygame.locals import *
 
-# Optimize 10 percent of the code that takes 90% of the time
-class Player:
-    def __init__(self, screen, rect , background_color):    
+class Body: 
+    def __init__(self, screen, rect, background_color):
         self._screen_to_render = screen
-        self._player_bounds = rect
-        self._player = pygame.Rect(rect)
+        self._player_bounds = rect 
         self._background_color = background_color
+        self._current_direction = None
+        self._next_direction = None
+        self._is_tail = True
+
+    def get_screen_to_render(self):
+        return self._screen_to_render
+
+    def get_rect_bounds(self):
+        return self._player_bounds
+
+    def get_background_color(self):
+        return self._background_color
+
+    def get_current_direction(self):
+        return self._current_direction
+    
+    def get_next_direction(self):
+        return self._next_direction
+
+    def get_tail(self):
+        return self._is_tail
+
+    def set_current_direction(self, current_direction):
+        self._current_direction = current_direction
+
+    def set_next_direction(self, next_direction):
+        self._next_direction = next_direction
+
+    def set_tail(self, is_tail):
+        self._is_tail = is_tail
+
+    def draw(self):
+        pygame.draw.rect(self.get_screen_to_render(), (0, 255, 255), pygame.Rect(self.get_rect_bounds()))
+
+    def update(self):
+        pygame.display.update()
+
+# Optimize 10 percent of the code that takes 90% of the time
+class Player(Body):
+    def __init__(self, screen, rect , background_color): 
+        super().__init__(screen, rect, background_color)
+        self._player = pygame.Rect(rect)
         self._previous_event = None
         self._previous_key = None
         self._body_list = [self._player]
         self._speed = 2
 
 
-    def get_screen_to_render(self):
-        return self._screen_to_render
-
-    def get_player_bounds(self):
-        return self._player_bounds
-
     def get_player(self):
         return self._player
     
-    def get_background_color(self):
-        return self._background_color
 
     def get_previous_key(self):
         return self._previous_key
@@ -116,37 +148,36 @@ class Player:
         print("Spawn Tail")
         pygame.draw.rect(self.get_screen_to_render(), (255, 0, 255), self.get_screen_to_render())
 
-    
     def move_up(self):
         player = self.get_player()
         #delete_player = pygame.Rect((self.get_screen_to_render, (0, 0, 0), player.get_player_bounds))
-        pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
+        pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
         self.set_player(player.move(0, -1 * self.get_speed()))
-        pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
+        pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
         #self.print_info()
         pygame.display.update(player)
 
     def move_left(self):
         player = self.get_player()
-        pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
+        pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
         self.set_player(player.move(-1 * self.get_speed(), 0))
-        pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
+        pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
         #self.print_info()
         pygame.display.update(player)    
 
     def move_down(self):
         player = self.get_player()
-        pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
+        pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
         self.set_player(player.move(0, self.get_speed()))
-        pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
+        pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
         #self.print_info()
         pygame.display.update(player)    
 
     def move_right(self):
         player = self.get_player()
-        pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
+        pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
         self.set_player(player.move(self.get_speed(), 0))
-        pygame.draw.rect(self.get_screen_to_render(), self.get_background_color(), player)
+        pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
         #self.print_info()
         pygame.display.update(player)           
 
