@@ -101,11 +101,17 @@ class LevelScene(Scene):
         self._player = player
         self._score = TimerScore()
         self._background_color = background_color
+        self._text = "Score: " + str(self._score.get_score())
         self._pickup_list = [PickUp(self._screen, background_color)]
-    
+        self._score_font = pygame.font.Font(pygame.font.get_default_font(), 18)
+        (w, h) = self._screen.get_size()
+        self._score_display = self._score_font.render(self._text, True, rgbcolors.white)
+        self._score_display_pos = self._score_display.get_rect(center=(w/2, h/16))
+
     def draw(self):
         super().draw()
         self._player.draw()
+        self._screen.blit(self._score_display, self._score_display_pos)
         for pickup in self._pickup_list:
             pickup.draw()
         print('The score is {}'.format(self._score))
@@ -125,6 +131,7 @@ class LevelScene(Scene):
     def spawn_pickup(self):
         for pickup in self._pickup_list:
             if pickup.is_picked_up():
+                pickup.add_to_score(self._score)
                 self._pickup_list.pop()
                 self._pickup_list.append(PickUp(self._screen, self._background_color))
     
@@ -135,3 +142,5 @@ class LevelScene(Scene):
         #if self._player.is_self_intersecting()
         #    print("You collided with yourself!")
         self._score.click()
+        self._text = "Score: " + str(self._score.get_score())
+        self._score_display = self._score_font.render(self._text, True, rgbcolors.white)

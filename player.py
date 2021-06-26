@@ -77,6 +77,9 @@ class Player(Body):
     def get_is_head(self):
         return self._is_head
 
+    def get_body_list(self):
+        return self._body_list
+
     def set_player(self, player):
         self._player = player
 
