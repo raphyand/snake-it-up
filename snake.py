@@ -4,6 +4,7 @@ import pdb
 import event_manager
 import rgbcolors
 from player import Player
+from pickup import PickUp
 #from scene import Scene
 # Note: Everything in Pygame is a rect
 
@@ -38,7 +39,8 @@ def main():
 	#player = pygame.Rect(400, 400, 25, 25)
 	player = Player(screen, background_color, True)
 	#player2 = Player(screen, pygame.Rect(400, 434, 32, 32), background_color, True)
-	
+	test_pickup = PickUp(screen, background_color)
+
 	screen.blit(background, (0,0))
 	turn_off = False
 	while turn_off is False: 
@@ -54,6 +56,7 @@ def main():
 			turn_off = False
 		
 		player.draw()
+		test_pickup.draw()
 		#player2.draw()
 
 
