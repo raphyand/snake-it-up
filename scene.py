@@ -1,6 +1,8 @@
 
 import pygame
 import rgbcolors
+import random
+from pickup import PickUp
 from score import TimerScore
 
 class Scene:
@@ -94,14 +96,20 @@ class BlinkingTitle(TitleScene):
 
 
 class LevelScene(Scene):
-    def __init__(self, scene_id, screen, background_color=rgbcolors.springgreen1, player):
+    def __init__(self, scene_id, screen, background_color, player):
         super().__init__(scene_id, screen, background_color)
         self._player = player
         self._score = TimerScore()
+        self._background_color = background_color
+        self._pickup_list = [PickUp(self._screen, background_color)]
+    
     def draw(self):
         super().draw()
         self._player.draw()
+        for pickup in self._pickup_list:
+            pickup.draw()
         print('The score is {}'.format(self._score))
+        
 
     def process_event(self, event):
         if event.type == pygame.QUIT:
@@ -109,9 +117,21 @@ class LevelScene(Scene):
             self.set_not_valid()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             self.set_not_valid()
+        self._player.process_events(event)
+        for pickup in self._pickup_list:
+            pickup.detect_collision(self._player)
+        self.spawn_pickup()
+
+    def spawn_pickup(self):
+        for pickup in self._pickup_list:
+            if pickup.is_picked_up():
+                self._pickup_list.pop()
+                self._pickup_list.append(PickUp(self._screen, self._background_color))
+    
 
     def update(self):
-        self._player.update()
-        if self._player.is_self_intersecting()
-            print("You collided with yourself!")
+        #self._player.update()
+        
+        #if self._player.is_self_intersecting()
+        #    print("You collided with yourself!")
         self._score.click()

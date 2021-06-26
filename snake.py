@@ -2,7 +2,8 @@
 import pygame
 import pdb
 import event_manager
-import rgbcolors
+from rgbcolors import goldenrod, navyblue, cyan, purple1
+from scene import Scene, TitleScene, LevelScene
 from player import Player
 from pickup import PickUp
 #from scene import Scene
@@ -32,7 +33,7 @@ def main():
 	#clock = pygame.time.clock(60)
 	screen = pygame.display.set_mode(window_size)
 	#background_color = (120, 120, 150)
-	background_color = rgbcolors.purple1
+	background_color = purple1#rgbcolors.purple1
 	background = pygame.Surface(screen.get_size())
 	#background = pygame.Surface((768, 768))
 	background.fill(background_color)
@@ -41,55 +42,55 @@ def main():
 	#player2 = Player(screen, pygame.Rect(400, 434, 32, 32), background_color, True)
 	test_pickup = PickUp(screen, background_color)
 
-	screen.blit(background, (0,0))
-	turn_off = False
-	while turn_off is False: 
+	#screen.blit(background, (0,0))
+	#turn_off = False
+	#while turn_off is False: 
 		#print(clock.tick(60))
-		clock.tick(60)
-		for event in pygame.event.get():
+	#	clock.tick(60)
+	#	for event in pygame.event.get():
 			#print(pygame.event.get())
-			print(event)
-			player.process_events(event)
+	#		print(event)
+	#		player.process_events(event)
 			#player2.process_events(event)
-			turn_off = event_manager.process_events_exit(event)
-		if turn_off is None:
-			turn_off = False
+	#		turn_off = event_manager.process_events_exit(event)
+	#	if turn_off is None:
+	#		turn_off = False
 		
-		player.draw()
-		test_pickup.draw()
-		test_pickup.detect_collision(player)
+	#	player.draw()
+	#	test_pickup.draw()
+	#	test_pickup.detect_collision(player)
 		#player2.draw()
 
 
 	#Professor's code____________
-	#title = 'Snake++'
-	#pygame.display.set_caption(title)
+	title = 'Snake++'
+	pygame.display.set_caption(title)
 
 	# make a player
 	# make a list of scenes
 	#this is a placeholder
  	# this is a placeholder
 	#scene_list = [1, 2, 3, 4]
-	#scene_list = [TitleScene(1, screen, goldenrod, title, navyblue, 72), Scene(2, screen, cyan), Scene(3)]	
+	scene_list = [TitleScene(1, screen, goldenrod, title, navyblue, 72), Scene(2, screen, cyan), LevelScene(3, screen, purple1, player)]	
 
-	#for scene in scene_list:
+	for scene in scene_list:
 		# start the scene
-	#	scene.start_scene()
-	#	while scene.is_valid():
+		scene.start_scene()
+		while scene.is_valid():
 		#while the scene is valid
-	#		clock.tick(scene.frame_rate())
+			clock.tick(scene.frame_rate())
 			# measure the clock ticks
-	#		for event in pygame.event.get():
-	#			scene.process_event(event)
+			for event in pygame.event.get():
+				scene.process_event(event)
 			#process all game events
-	#		scene.update()
+			scene.update()
 			#update the scene
-	#		scene.draw()
-	#		pygame.display.update()
+			scene.draw()
+			pygame.display.update()
 			# draw the scene
 
 		#end the scene
-	#	scene.end_scene()
+		scene.end_scene()
 	pygame.quit()
 
 

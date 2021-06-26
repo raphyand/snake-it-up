@@ -55,7 +55,7 @@ class Player(Body):
         self._speed = 33#17 #33
         self._click_time = 1
         self._last_time = pygame.time.get_ticks()
-        self._time_btw_moves = 750
+        self._time_btw_moves = 500
         self._is_head = is_head
         self._player = self._body_list[0]
         self._repeat_move = 0
@@ -168,19 +168,27 @@ class Player(Body):
     def draw(self):
         for part in self._body_list:
             pygame.draw.rect(self.get_screen_to_render(), (0, 255, 255), part)
-            pygame.display.update()
+            #pygame.display.update()
 
     def spawn_tail(self):
         print("Spawn Tail")
         new_body_part = None
         if self._direction == "Up":
             new_body_part = (self.get_player().move(0, -1 * self.get_speed())) #64
+            #self.set_player(self._body_list[0])
+            #self.move_up()
         elif self._direction == "Left":
             new_body_part = (self.get_player().move(-1 * self.get_speed(), 0))
+            #self.set_player(self._body_list[0])
+            #self.move_left()
         elif self._direction == "Down":
             new_body_part = (self.get_player().move(0, self.get_speed()))
+            #self.set_player(self._body_list[0])
+            #self.move_down()
         elif self._direction == "Right":
             new_body_part = (self.get_player().move(self.get_speed(), 0))
+            #self.set_player(self._body_list[0])
+            #self.move_right()
 
         self._body_list.insert(0, new_body_part)
         self.set_player(self._body_list[0])
