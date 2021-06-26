@@ -52,12 +52,14 @@ class Player(Body):
         self._previous_event = None
         self._previous_key = None
         self._body_list = [pygame.Rect((400, 400), self._dimension)]
-        self._speed = 33
+        self._speed = 33#17 #33
         self._click_time = 1
         self._last_time = pygame.time.get_ticks()
-        self._time_btw_moves = 250
+        self._time_btw_moves = 750
         self._is_head = is_head
         self._player = self._body_list[0]
+        self._repeat_move = 0
+        self._direction = None
        # self._avatar = [pygame.Rect(400,400) self._dimension)]
 
     def get_player(self):
@@ -92,53 +94,73 @@ class Player(Body):
 
     def process_events(self, event):
         pygame.event.clear()
-        pygame.event.set_blocked([pygame.MOUSEMOTION, pygame.KEYUP])
+        pygame.event.set_blocked([pygame.MOUSEMOTION, pygame.KEYUP, pygame.TEXTINPUT])
+        
+        #print(event)
         if event == None:
             print("None")
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN and event.type != self.get_previous_key():
+            pygame.event.clear()
             #print("A key has been pressed.")
             #self.set_previous_key(event.key)
             #self.set_previous_event(event)
             #for bodypart in self._body_list:
-            if event.key == pygame.K_w:
+            if event.key == pygame.K_w and self.get_previous_key() != pygame.K_s and self.get_previous_key() != pygame.K_w:
                 self.set_previous_key(event.key)
                 self.set_previous_event(event)
+                self._repeat_move = 0
+                self._direction = "Up"
                 #print("Move up")
                 self.move_up()
-            elif event.key == pygame.K_a:
+            elif event.key == pygame.K_a and self.get_previous_key() != pygame.K_d and self.get_previous_key() != pygame.K_a:
                 self.set_previous_key(event.key)
                 self.set_previous_event(event)
+                self._repeat_move = 0
+                self._direction = "Left"
                 #print("Move left")
                 self.move_left()
-            elif event.key == pygame.K_s:
+            elif event.key == pygame.K_s and self.get_previous_key() != pygame.K_w and self.get_previous_key() != pygame.K_s:
                 self.set_previous_key(event.key)
                 self.set_previous_event(event)
+                self._repeat_move = 0
                 #print("Move down")
+                self._direction = "Down"
                 self.move_down()
-            elif event.key == pygame.K_d:
+            elif event.key == pygame.K_d and self.get_previous_key() != pygame.K_a and self.get_previous_key() != pygame.K_d:
                 self.set_previous_key(event.key)
                 self.set_previous_event(event)
+                self._repeat_move = 0
+                self._direction = "Right"
                 #print("Move right")
                 self.move_right()
             elif event.key == pygame.K_q:
                 self.spawn_tail()
                 print("Spawn tail")
             time.sleep(.001)
+            # Block to continue moving in one direction after
+            # pressing the move button once.
+            if self.get_previous_key() == pygame.K_w and self.get_previous_key() != pygame.K_s: #and self._repeat_move < 2:
+                pygame.event.clear()
+                pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
+                #self._repeat_move = self._repeat_move + 1
+                self.move_up()
+            elif self.get_previous_key() == pygame.K_a and self.get_previous_key() != pygame.K_d:# and self._repeat_move < 2:
+                pygame.event.clear()
+                pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
+                #self._repeat_move = self._repeat_move + 1
+                self.move_left()           
+            elif self.get_previous_key() == pygame.K_s and self.get_previous_key() != pygame.K_w:# and self._repeat_move < 2:
+                pygame.event.clear()
+                pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
+                #self._repeat_move = self._repeat_move + 1
+                self.move_down()
+            elif self.get_previous_key() == pygame.K_d and self.get_previous_key() != pygame.K_a:# and self._repeat_move < 2:
+                pygame.event.clear()
+                pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
+                #self._repeat_move = self._repeat_move + 1
+                self.move_right()
+            pygame.event.clear()
 
-        # Block to continue moving in one direction after
-        # pressing the move button once.
-        #if self.get_previous_key() == pygame.K_w:
-        #    pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
-        #    self.move_up()
-        #elif self.get_previous_key() == pygame.K_a:
-        #    pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
-        #    self.move_left()           
-        #elif self.get_previous_key() == pygame.K_s:
-        #    pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
-        #    self.move_down()
-        #elif self.get_previous_key() == pygame.K_d:
-        #    pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
-        #    self.move_right()
 
     # Draw cyan for now
     # You update THEN draw
@@ -154,8 +176,18 @@ class Player(Body):
     #    self.set_player(self._body_list[0])
 
     def spawn_tail(self):
+        #pdb.set_trace()
         print("Spawn Tail")
-        new_body_part = (self.get_player().move(0, -1 * 64))
+        new_body_part = None
+        if self._direction == "Up":
+            new_body_part = (self.get_player().move(0, -1 * self.get_speed())) #64
+        elif self._direction == "Left":
+            new_body_part = (self.get_player().move(-1 * self.get_speed(), 0))
+        elif self._direction == "Down":
+            new_body_part = (self.get_player().move(0, self.get_speed()))
+        elif self._direction == "Right":
+            new_body_part = (self.get_player().move(self.get_speed(), 0))
+
         self._body_list.insert(0, new_body_part)
         self.set_player(self._body_list[0])
         #self._body_list.insert(0, playe)

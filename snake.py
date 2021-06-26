@@ -45,8 +45,8 @@ def main():
 		#print(clock.tick(60))
 		clock.tick(60)
 		for event in pygame.event.get():
-			print(pygame.event.get())
-			#print(event)
+			#print(pygame.event.get())
+			print(event)
 			player.process_events(event)
 			#player2.process_events(event)
 			turn_off = event_manager.process_events_exit(event)
