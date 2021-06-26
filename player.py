@@ -170,13 +170,7 @@ class Player(Body):
             pygame.draw.rect(self.get_screen_to_render(), (0, 255, 255), part)
             pygame.display.update()
 
-    #def add_tail(self):
-        #self._body_list.append(Body(super().get_screen_to_render(), super().get_rect_bounds(), super().get_background_color()))
-    #    self._body_list.insert(0, Player(self._screen_to_render, self._player_bounds, super().get_background_color(), True ))
-    #    self.set_player(self._body_list[0])
-
     def spawn_tail(self):
-        #pdb.set_trace()
         print("Spawn Tail")
         new_body_part = None
         if self._direction == "Up":
@@ -190,77 +184,42 @@ class Player(Body):
 
         self._body_list.insert(0, new_body_part)
         self.set_player(self._body_list[0])
-        #self._body_list.insert(0, playe)
-    #    self.add_tail()
-        #self._body_list[-1].draw()
-         #pygame.draw.rect(self.get_screen_to_render(), (255, 0, 255), self.get_player())
-    #    pygame.display.update()
 
     def move_up(self):
-        #player = self.get_player()
         player = self._body_list[0]
         pygame.display.update(player)
-        #delete_player = pygame.Rect((self.get_screen_to_render, (0, 0, 0), player.get_player_bounds))
-        #pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), self._body_list[0])
-        #self.draw()
         new_position = (player.move(0, -1 * self.get_speed()))
         self._body_list.insert(0, new_position)
         pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), self._body_list[-1]) #Draw the ground after the last bodypart
         self._body_list.pop()
-
         self.set_player(player)
-        #self._body_list.insert(0, player)
-        #self.print_info()
 
     def move_left(self):
-        #player = self.get_player()
-        #pygame.display.update(player)    
-        #pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
-        #self.set_player(player.move(-1 * self.get_speed(), 0))
-        #pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
         player = self._body_list[0]
         pygame.display.update(player)
         new_position = (player.move(-1 * self.get_speed(), 0))
         self._body_list.insert(0, new_position)
         pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), self._body_list[-1]) #Draw the ground after the last bodypart
         self._body_list.pop()
-
         self.set_player(player)
-        #self.print_info()
 
     def move_down(self):
-        #player = self.get_player()
-        #pygame.display.update(player)    
-        #pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
-        #self.set_player(player.move(0, self.get_speed()))
-        #pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
-
         player = self._body_list[0]
         pygame.display.update(player)
         new_position = (player.move(0, 1 * self.get_speed()))
         self._body_list.insert(0, new_position)
         pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), self._body_list[-1]) #Draw the ground after the last bodypart
         self._body_list.pop()
-
         self.set_player(player)       
-        #self.print_info()
 
     def move_right(self):
-        #player = self.get_player()
-        #pygame.display.update(player)           
-        #pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
-        #self.set_player(player.move(self.get_speed(), 0))
-        #pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), player)
-
         player = self._body_list[0]
         pygame.display.update(player)
         new_position = (player.move(self.get_speed(), 0))
         self._body_list.insert(0, new_position)
         pygame.draw.rect(self.get_screen_to_render(), super().get_background_color(), self._body_list[-1]) #Draw the ground after the last bodypart
         self._body_list.pop()
-
         self.set_player(player)        
-        #self.print_info()
 
     def print_info(self):
         player = self.get_player()
