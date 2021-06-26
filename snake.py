@@ -57,6 +57,7 @@ def main():
 		
 		player.draw()
 		test_pickup.draw()
+		test_pickup.detect_collision(player)
 		#player2.draw()
 
 
