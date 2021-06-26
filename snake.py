@@ -36,15 +36,16 @@ def main():
 	#background = pygame.Surface((768, 768))
 	background.fill(background_color)
 	#player = pygame.Rect(400, 400, 25, 25)
-	player = Player(screen, pygame.Rect(400, 400, 32, 32), background_color)
-	player2 = Player(screen, pygame.Rect(400, 450, 25, 25), background_color)
+	player = Player(screen, background_color, True)
+	#player2 = Player(screen, pygame.Rect(400, 434, 32, 32), background_color, True)
 	
 	screen.blit(background, (0,0))
 	turn_off = False
 	while turn_off is False: 
 		#print(clock.tick(60))
-		clock.tick(30)
+		clock.tick(60)
 		for event in pygame.event.get():
+			print(pygame.event.get())
 			#print(event)
 			player.process_events(event)
 			#player2.process_events(event)
