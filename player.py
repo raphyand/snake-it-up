@@ -102,7 +102,7 @@ class Player(Body):
     def process_events(self, event):
         pygame.event.clear()
         pygame.event.set_blocked([pygame.MOUSEMOTION, pygame.KEYUP, pygame.TEXTINPUT])
-        
+
         #print(event)
         if event == None:
             print("None")
