@@ -53,19 +53,26 @@ def main():
 	window_size = (800, 800)
 	clock = pygame.time.Clock()
 
-	screen = pygame.display.set_mode(window_size)
-	background_color = purple1
-	background = pygame.Surface(screen.get_size())
-	background.fill(background_color)
-	player = Player(screen, background_color, True)
+	#screen = pygame.display.set_mode(window_size)
+	#background_color = purple1
+	#background = pygame.Surface(screen.get_size())
+	#background.fill(background_color)
+	#player = Player(screen, background_color, True)
 	#test_pickup = PickUp(screen, background_color)
-	title = 'Snake++'
-	pygame.display.set_caption(title)
+	#title = 'Snake++'
+	#pygame.display.set_caption(title)
 
-	scene_list = [TitleScene(GameState.MAIN_MENU, screen, goldenrod, title, navyblue, 72), LevelScene(GameState.PLAY_LEVEL, screen, purple1, player), LeaderBoardScene(GameState.LEADER_BOARD, screen, navyblue, "LeaderBoard", goldenrod, 72)]	
+	#scene_list = [TitleScene(GameState.MAIN_MENU, screen, goldenrod, title, navyblue, 72), LevelScene(GameState.PLAY_LEVEL, screen, purple1, player), LeaderBoardScene(GameState.LEADER_BOARD, screen, navyblue, "LeaderBoard", goldenrod, 72)]	
 	current_game_state = GameState.MAIN_MENU
 
 	while current_game_state is not GameState.END_MENU :
+		title = 'Snake++'
+		screen = pygame.display.set_mode(window_size)
+		background_color = purple1
+		background = pygame.Surface(screen.get_size())
+		background.fill(background_color)
+		pygame.display.set_caption(title)
+		player = Player(screen, background_color, True)
 		current_scene = create_level(current_game_state, screen, title, player)
 		current_scene.start_scene()
 		while current_scene.is_valid():

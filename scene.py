@@ -297,7 +297,7 @@ class LeaderBoardScene(Scene):
 
     def move_to_next_scene(self):
         if self._id is not GameState.END_MENU:
-            return GameState.MAIN_MENU
+            return GameState.PLAY_LEVEL
         else:
             return GameState.END_MENU  
 
