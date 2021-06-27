@@ -114,7 +114,7 @@ class LevelScene(Scene):
         self._screen.blit(self._score_display, self._score_display_pos)
         for pickup in self._pickup_list:
             pickup.draw()
-        print('The score is {}'.format(self._score))
+        #print('The score is {}'.format(self._score))
         
 
     def process_event(self, event):
@@ -137,7 +137,7 @@ class LevelScene(Scene):
     
 
     def update(self):
-        #self._player.update()
+        self._player.update()
         
         #if self._player.is_self_intersecting()
         #    print("You collided with yourself!")

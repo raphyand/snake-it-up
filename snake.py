@@ -71,7 +71,7 @@ def main():
 	#this is a placeholder
  	# this is a placeholder
 	#scene_list = [1, 2, 3, 4]
-	scene_list = [TitleScene(1, screen, goldenrod, title, navyblue, 72), LevelScene(3, screen, purple1, player)]	
+	scene_list = [TitleScene(1, screen, goldenrod, title, navyblue, 72), LevelScene(2, screen, purple1, player)]	
 
 	for scene in scene_list:
 		# start the scene

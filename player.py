@@ -52,7 +52,7 @@ class Player(Body):
         self._previous_event = None
         self._previous_key = None
         self._body_list = [pygame.Rect((400, 400), self._dimension)]
-        self._speed = 33#17 #33
+        self._speed = 35#17 #33
         self._click_time = 1
         self._last_time = pygame.time.get_ticks()
         self._time_btw_moves = 500
@@ -104,29 +104,22 @@ class Player(Body):
             print("None")
         if event.type == pygame.KEYDOWN and event.type != self.get_previous_key():
             pygame.event.clear()
-            #print("A key has been pressed.")
-            #self.set_previous_key(event.key)
-            #self.set_previous_event(event)
-            #for bodypart in self._body_list:
             if event.key == pygame.K_w and self.get_previous_key() != pygame.K_s and self.get_previous_key() != pygame.K_w:
                 self.set_previous_key(event.key)
                 self.set_previous_event(event)
                 self._repeat_move = 0
                 self._direction = "Up"
-                #print("Move up")
                 self.move_up()
             elif event.key == pygame.K_a and self.get_previous_key() != pygame.K_d and self.get_previous_key() != pygame.K_a:
                 self.set_previous_key(event.key)
                 self.set_previous_event(event)
                 self._repeat_move = 0
                 self._direction = "Left"
-                #print("Move left")
                 self.move_left()
             elif event.key == pygame.K_s and self.get_previous_key() != pygame.K_w and self.get_previous_key() != pygame.K_s:
                 self.set_previous_key(event.key)
                 self.set_previous_event(event)
                 self._repeat_move = 0
-                #print("Move down")
                 self._direction = "Down"
                 self.move_down()
             elif event.key == pygame.K_d and self.get_previous_key() != pygame.K_a and self.get_previous_key() != pygame.K_d:
@@ -134,7 +127,6 @@ class Player(Body):
                 self.set_previous_event(event)
                 self._repeat_move = 0
                 self._direction = "Right"
-                #print("Move right")
                 self.move_right()
             elif event.key == pygame.K_q:
                 self.spawn_tail()
@@ -164,6 +156,21 @@ class Player(Body):
                 self.move_right()
             pygame.event.clear()
 
+    def self_collision(self):
+        head = self._body_list[0]
+        tail_list = self._body_list[3:]
+        #first_hit = head.collidelist(tail_list) #something inside; the ype of inside is a list of rects
+        #first_hit = None
+        for part in tail_list:
+            if part.colliderect(head):
+                print("Hit self!")
+        #if first_hit:
+         #   print("Hit self!")
+        #return first_hit != -1
+        #if self.colliderect(player.get_player()) and self._picked_up is False:
+
+    def update(self):
+        self.self_collision()
 
     # Draw cyan for now
     # You update THEN draw
