@@ -185,8 +185,8 @@ class LevelScene(Scene):
             print("Record file does not exist")
         else:
             with open('record_data.pickle', 'rb') as fh:
-                #self._save_info = pickle.load(fh)
-                self._save_info.append(pickle.load(fh))
+                self._save_info = pickle.load(fh)
+                #self._save_info.append(pickle.load(fh))
             print(self._save_info)
 
     def write_data(self):
@@ -281,7 +281,7 @@ class LeaderBoardScene(Scene):
         record_pos = record_display.get_rect(center=(w/2, h/6 + self._padding_value))
         instance = [record_font, record_display, record_pos, self._padding_value]
         self._display_list.append(instance)
-        self._padding_value = self._padding_value + self._padding_value
+        self._padding_value = self._padding_value + 30
         #self._screen.blit(record_display, record_pos)
         
     def draw_records(self):
