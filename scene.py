@@ -5,10 +5,11 @@ import random
 import datetime
 import pdb
 import pickle
+import os
 from collections import namedtuple
 from pickup import PickUp
 from score import TimerScore
-import os
+from utils import GameState
 class Scene:
     def __init__(self, scene_id, screen, background_color=rgbcolors.springgreen1):
         self._id = scene_id
@@ -26,8 +27,10 @@ class Scene:
         if event.type == pygame.QUIT:
             print('Good bye!')
             self.set_not_valid()
+            self._id = GameState.END_MENU
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             self.set_not_valid()
+            self._id = GameState.END_MENU
 
     def is_valid(self):
         return self._is_valid
@@ -50,6 +53,9 @@ class Scene:
     def __str__(self):
         return 'Scene {}'.format(self._id)
 
+    def get_game_state(self):
+        return self._id
+
 class TitleScene(Scene):
     def __init__(self, scene_id, screen, background_color, title, title_color, title_size):
         super().__init__(scene_id, screen, background_color)
@@ -70,6 +76,12 @@ class TitleScene(Scene):
         super().process_event(event)
         if event.type == pygame.KEYDOWN:
             self.set_not_valid()
+
+    def move_to_next_scene(self):
+        if self._id is not GameState.END_MENU:
+            return GameState.PLAY_LEVEL
+        else:
+            return GameState.END_MENU
 
 class BlinkingTitle(TitleScene):
     def __init__(self, scene_id, screen, background_color, title, title_color, title_size):
@@ -138,8 +150,10 @@ class LevelScene(Scene):
         if event.type == pygame.QUIT:
             print('Good bye!')
             self.set_not_valid()
+            self._id = GameState.END_MENU
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             self.set_not_valid()
+            self._id = GameState.END_MENU
         if self._player.dead is False:
             self._player.process_events(event)
             for pickup in self._pickup_list:
@@ -147,6 +161,8 @@ class LevelScene(Scene):
             self.spawn_pickup()
         else:
             print("Game Over!")
+            if event.type == pygame.KEYDOWN:
+                self.set_not_valid()
 
     def spawn_pickup(self):
         for pickup in self._pickup_list:
@@ -206,6 +222,13 @@ class LevelScene(Scene):
         self._save_info.append(record)
         self.write_data()
         
+    def move_to_next_scene(self):
+        if self._id is not GameState.END_MENU:
+            return GameState.LEADER_BOARD
+        else:
+            return GameState.END_MENU
+
+    
     def update(self):
         if self._player.dead is False:
             self.collide_boundaries()
@@ -272,7 +295,11 @@ class LeaderBoardScene(Scene):
                     #print(attr)
                     #self.load_records(str(attr))
 
-
+    def move_to_next_scene(self):
+        if self._id is not GameState.END_MENU:
+            return GameState.MAIN_MENU
+        else:
+            return GameState.END_MENU  
 
     def load_records(self, record):
         (w, h) = self._screen.get_size()
