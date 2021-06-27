@@ -60,6 +60,7 @@ class Player(Body):
         self._player = self._body_list[0]
         self._repeat_move = 0
         self._direction = None
+        self.dead = False
        # self._avatar = [pygame.Rect(400,400) self._dimension)]
 
     def get_player(self):
@@ -79,6 +80,9 @@ class Player(Body):
 
     def get_body_list(self):
         return self._body_list
+
+    def is_dead(self):
+        return self.dead
 
     def set_player(self, player):
         self._player = player
@@ -159,15 +163,11 @@ class Player(Body):
     def self_collision(self):
         head = self._body_list[0]
         tail_list = self._body_list[3:]
-        #first_hit = head.collidelist(tail_list) #something inside; the ype of inside is a list of rects
-        #first_hit = None
         for part in tail_list:
             if part.colliderect(head):
                 print("Hit self!")
-        #if first_hit:
-         #   print("Hit self!")
-        #return first_hit != -1
-        #if self.colliderect(player.get_player()) and self._picked_up is False:
+                self.dead = True
+
 
     def update(self):
         self.self_collision()

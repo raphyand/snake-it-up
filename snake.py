@@ -93,9 +93,5 @@ def main():
 		scene.end_scene()
 	pygame.quit()
 
-
-
-
-
 if __name__ == '__main__':
     main()

@@ -33,7 +33,4 @@ class PickUp:
         if self._body.colliderect(player.get_player()) and self._picked_up is False:
             self._picked_up = True
             player.spawn_tail()
-            #pygame.draw.rect(self._screen_to_render(), self._background_color, self._body)
             print("Collision!")
-        #if self._body.collidelist(player.get_body_list()) and self._picked_up is False:
-        #    self._picked_up = True

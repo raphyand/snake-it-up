@@ -123,10 +123,13 @@ class LevelScene(Scene):
             self.set_not_valid()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             self.set_not_valid()
-        self._player.process_events(event)
-        for pickup in self._pickup_list:
-            pickup.detect_collision(self._player)
-        self.spawn_pickup()
+        if self._player.dead is False:
+            self._player.process_events(event)
+            for pickup in self._pickup_list:
+                pickup.detect_collision(self._player)
+            self.spawn_pickup()
+        else:
+            print("Game Over!")
 
     def spawn_pickup(self):
         for pickup in self._pickup_list:
@@ -137,10 +140,10 @@ class LevelScene(Scene):
     
 
     def update(self):
-        self._player.update()
-        
-        #if self._player.is_self_intersecting()
-        #    print("You collided with yourself!")
-        self._score.click()
-        self._text = "Score: " + str(self._score.get_score())
-        self._score_display = self._score_font.render(self._text, True, rgbcolors.white)
+        if self._player.dead is False:
+            self._player.update()
+            #if self._player.is_self_intersecting()
+            #    print("You collided with yourself!")
+            self._score.click()
+            self._text = "Score: " + str(self._score.get_score())
+            self._score_display = self._score_font.render(self._text, True, rgbcolors.white)
