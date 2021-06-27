@@ -62,15 +62,43 @@ class TitleScene(Scene):
         title_font = pygame.font.Font(pygame.font.get_default_font(), title_size)
         self._title = title_font.render(title, True, title_color)
         press_any_key_font = pygame.font.Font(pygame.font.get_default_font(), 18)
-        self._press_any_key = press_any_key_font.render('Press any key.', True, rgbcolors.black)
+        self._press_any_key = press_any_key_font.render('Press any key to play. Press ESC to quit.', True, rgbcolors.black)
         (w, h) = self._screen.get_size()
-        self._title_pos = self._title.get_rect(center=(w/2, h/2))
-        self._press_any_key_pos = self._press_any_key.get_rect(center=(w/2, h - 50))
+        self._title_pos = self._title.get_rect(center=(w/2, h/3 - 100))
+        self._press_any_key_pos = self._press_any_key.get_rect(center=(w/2, h * (3/4)))
+      
+    def draw_instructions(self):
+        (w, h) = self._screen.get_size()
+        self._instructions_font = pygame.font.Font(pygame.font.get_default_font(), 18)
+        self._instructions = self._instructions_font.render("Instructions:", True, rgbcolors.black)
+        self._instructions_pos = self._instructions.get_rect(center=(w/2, h/2 - 50))
+        self._screen.blit(self._instructions, self._instructions_pos)
+
+        self._instructions2_font = pygame.font.Font(pygame.font.get_default_font(), 18)
+        self._instructions2 = self._instructions2_font.render("WASD to move up, left, down, right", True, rgbcolors.black)
+        self._instructions2_pos = self._instructions2.get_rect(center=(w/2, h/2 - 20))
+        self._screen.blit(self._instructions2, self._instructions2_pos)
+
+        self._instructions3_font = pygame.font.Font(pygame.font.get_default_font(), 18)
+        self._instructions3 = self._instructions3_font.render("Get the most points by surviving and gathering apples", True, rgbcolors.black)
+        self._instructions3_pos = self._instructions3.get_rect(center=(w/2, h/2))
+        self._screen.blit(self._instructions3, self._instructions3_pos) 
+
+        self._instructions4_font = pygame.font.Font(pygame.font.get_default_font(), 18)
+        self._instructions4 = self._instructions4_font.render("Eating an apple will make you grow", True, rgbcolors.black)
+        self._instructions4_pos = self._instructions4.get_rect(center=(w/2, h/2 + 20))
+        self._screen.blit(self._instructions4, self._instructions4_pos)               
+
+        self._instructions5_font = pygame.font.Font(pygame.font.get_default_font(), 18)
+        self._instructions5 = self._instructions5_font.render("Avoid the boundary, and your own body!", True, rgbcolors.black)
+        self._instructions5_pos = self._instructions5.get_rect(center=(w/2, h/2 + 40))
+        self._screen.blit(self._instructions5, self._instructions5_pos)  
 
     def draw(self):
         super().draw()
         self._screen.blit(self._title, self._title_pos)
         self._screen.blit(self._press_any_key, self._press_any_key_pos)
+        self.draw_instructions()
 
     def process_event(self, event):
         super().process_event(event)
@@ -129,7 +157,6 @@ class LevelScene(Scene):
         pygame.Rect((0, 790),(800,40) ), #Bottom Boundary
         pygame.Rect((790, 0),(40, 800)) #Right Boundary 
         ]
-        #self.Record = namedtuple('Record', ['score', 'date', 'time_elapsed'])
         self._save_info = []
 
     def draw(self):
@@ -254,12 +281,12 @@ class LeaderBoardScene(Scene):
         title_font = pygame.font.Font(pygame.font.get_default_font(), title_size)
         self._title = title_font.render(title, True, title_color)
         press_any_key_font = pygame.font.Font(pygame.font.get_default_font(), 18)
-        self._press_any_key = press_any_key_font.render('Press any key.', True, rgbcolors.black)
+        self._press_any_key = press_any_key_font.render('Press ESC to quit. Press any key to play again.', True, rgbcolors.black)
         (w, h) = self._screen.get_size()
         self._title_pos = self._title.get_rect(center=(w/2, h/10))
         self._press_any_key_pos = self._press_any_key.get_rect(center=(w/2, h - 50))
         self.record_font = pygame.font.Font(pygame.font.get_default_font(), 20)
-        self.record_display = self.record_font.render("Test", True, rgbcolors.black)
+        self.record_display = self.record_font.render("_____________________________________", True, rgbcolors.black)
         self.record_pos = self.record_display.get_rect(center=(w/2, h/6))
         self._save_info = []
         self.has_drawn = False
@@ -289,7 +316,7 @@ class LeaderBoardScene(Scene):
         self.read_data() 
         for record in self._save_info:
             for index in record:
-                print(index)
+                #print(index)
                 self.load_records(str(index))
                 #for attr in index:
                     #print(attr)
@@ -314,12 +341,6 @@ class LeaderBoardScene(Scene):
     def draw_records(self):
         for record in self._display_list:
             self._screen.blit(record[1], record[2])
-
-    #def update(self):
-        
-        #if self.has_drawn is False:
-        #self.leaderboard()
-            #self.has_drawn = True
 
     def read_data(self):
         if not os.path.exists('record_data.pickle'):

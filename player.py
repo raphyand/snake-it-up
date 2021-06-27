@@ -36,9 +36,6 @@ class Body:
     def set_tail(self, is_tail):
         self._is_tail = is_tail
 
-    #def draw(self):
-    #   pygame.draw.rect(self.get_screen_to_render(), (0, 255, 255), pygame.Rect(self.get_rect_bounds()))
-
     def update(self):
         pygame.display.update()
 
@@ -46,13 +43,12 @@ class Body:
 class Player(Body):
     def __init__(self, screen, background_color, is_head): 
         super().__init__(screen, background_color)
-        #self._player = pygame.Rect(rect)
         self._dimension = (32, 32)
         self._direction = (0,0)
         self._previous_event = None
         self._previous_key = None
         self._body_list = [pygame.Rect((400, 400), self._dimension)]
-        self._speed = 35#17 #33
+        self._speed = 35
         self._click_time = 1
         self._last_time = pygame.time.get_ticks()
         self._time_btw_moves = 500
@@ -61,7 +57,6 @@ class Player(Body):
         self._repeat_move = 0
         self._direction = None
         self.dead = False
-       # self._avatar = [pygame.Rect(400,400) self._dimension)]
 
     def get_player(self):
         return self._player
@@ -103,7 +98,6 @@ class Player(Body):
         pygame.event.clear()
         pygame.event.set_blocked([pygame.MOUSEMOTION, pygame.KEYUP, pygame.TEXTINPUT])
 
-        #print(event)
         if event == None:
             print("None")
         if event.type == pygame.KEYDOWN and event.type != self.get_previous_key():
@@ -132,31 +126,22 @@ class Player(Body):
                 self._repeat_move = 0
                 self._direction = "Right"
                 self.move_right()
-            #elif event.key == pygame.K_q:
-            #    self.spawn_tail()
-                #print("Spawn tail")
             time.sleep(.001)
-            # Block to continue moving in one direction after
-            # pressing the move button once.
-            if self.get_previous_key() == pygame.K_w and self.get_previous_key() != pygame.K_s: #and self._repeat_move < 2:
+            if self.get_previous_key() == pygame.K_w and self.get_previous_key() != pygame.K_s:
                 pygame.event.clear()
                 pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
-                #self._repeat_move = self._repeat_move + 1
                 self.move_up()
-            elif self.get_previous_key() == pygame.K_a and self.get_previous_key() != pygame.K_d:# and self._repeat_move < 2:
+            elif self.get_previous_key() == pygame.K_a and self.get_previous_key() != pygame.K_d:
                 pygame.event.clear()
                 pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
-                #self._repeat_move = self._repeat_move + 1
                 self.move_left()           
-            elif self.get_previous_key() == pygame.K_s and self.get_previous_key() != pygame.K_w:# and self._repeat_move < 2:
+            elif self.get_previous_key() == pygame.K_s and self.get_previous_key() != pygame.K_w:
                 pygame.event.clear()
                 pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
-                #self._repeat_move = self._repeat_move + 1
                 self.move_down()
-            elif self.get_previous_key() == pygame.K_d and self.get_previous_key() != pygame.K_a:# and self._repeat_move < 2:
+            elif self.get_previous_key() == pygame.K_d and self.get_previous_key() != pygame.K_a:
                 pygame.event.clear()
                 pygame.time.set_timer(self.get_previous_event(), self._time_btw_moves, True)
-                #self._repeat_move = self._repeat_move + 1
                 self.move_right()
             pygame.event.clear()
 
@@ -178,7 +163,6 @@ class Player(Body):
     def draw(self):
         for part in self._body_list:
             pygame.draw.rect(self.get_screen_to_render(), (0, 255, 255), part)
-            #pygame.display.update()
 
     def spawn_tail(self):
         print("Spawn Tail")
