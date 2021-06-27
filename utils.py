@@ -1,7 +1,7 @@
 """Utilties module for enumerations of AI behavior and game states"""
-#_author__ = 'Raphael S. Andaya'
-# __email__ = 'raphyand@csu.fullerton.edu'
-#__maintainer__ = 'raphyand'
+__author__ = 'Raphael S. Andaya'
+__email__ = 'raphyand@csu.fullerton.edu'
+__maintainer__ = 'raphyand'
 
 from enum import Enum
 class GameState(Enum):
