@@ -5,9 +5,10 @@ import random
 import datetime
 import pdb
 import pickle
+from collections import namedtuple
 from pickup import PickUp
 from score import TimerScore
-
+import os
 class Scene:
     def __init__(self, scene_id, screen, background_color=rgbcolors.springgreen1):
         self._id = scene_id
@@ -116,6 +117,7 @@ class LevelScene(Scene):
         pygame.Rect((0, 790),(800,40) ), #Bottom Boundary
         pygame.Rect((790, 0),(40, 800)) #Right Boundary 
         ]
+        #self.Record = namedtuple('Record', ['score', 'date', 'time_elapsed'])
         self._save_info = []
 
     def draw(self):
@@ -177,15 +179,35 @@ class LevelScene(Scene):
             print("Boundary Bottom!")
             self._player.dead = True
 
+    def read_data(self):
+        if not os.path.exists('record_data.pickle'):
+            #open(filename, 'w').close()
+            print("Record file does not exist")
+        else:
+            with open('record_data.pickle', 'rb') as fh:
+                #self._save_info = pickle.load(fh)
+                self._save_info.append(pickle.load(fh))
+            print(self._save_info)
+
+    def write_data(self):
+        with open('record_data.pickle', 'wb') as fh:
+            pickle.dump(self._save_info, fh, pickle.HIGHEST_PROTOCOL)
+
     def game_over_info(self):
-        #print(str(datetime.date.day) + " " + str(datetime.date.month) + " " + str(datetime.date.year))
         print("Game Over Info:")
         print("Score: " + str(self._score.get_score()))
-        self._save_info.append(self._score.get_score())
         print(datetime.date.today())
-        self._save_info.append(datetime.date.today())
         print(str(self._score.elapsed_time()) + " Seconds")
-        self._save_info.append(self._score.elapsed_time())
+        score_data = self._score.get_score()
+        date_data = datetime.date.today()
+        time_data = self._score.elapsed_time()
+        record = [score_data, date_data, time_data]
+        self.read_data()
+        self._save_info.append(record)
+        self.write_data()
+        
+
+
 
 
     def update(self):
@@ -205,8 +227,7 @@ class LevelScene(Scene):
             self._screen.blit(game_over_display, game_over_pos)
             if not self._save_info:
                 self.game_over_info()
-                with open('record_data.pickle', 'wb') as fh:
-                    pickle.dump(self._save_info, fh, pickle.HIGHEST_PROTOCOL)
+                
                     #Here you should: grab the pickled file if it exists
                     #Then unpickle it, then put it insde a list S
                     #Then add self._save_info into list S
