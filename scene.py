@@ -207,3 +207,8 @@ class LevelScene(Scene):
                 self.game_over_info()
                 with open('record_data.pickle', 'wb') as fh:
                     pickle.dump(self._save_info, fh, pickle.HIGHEST_PROTOCOL)
+                    #Here you should: grab the pickled file if it exists
+                    #Then unpickle it, then put it insde a list S
+                    #Then add self._save_info into list S
+                    #Then sort??? If you can! 
+                    #Then pickle that whole thang into the file
