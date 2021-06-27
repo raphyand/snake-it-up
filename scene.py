@@ -224,11 +224,6 @@ class LevelScene(Scene):
             if not self._save_info:
                 self.game_over_info()
                 
-                    #Here you should: grab the pickled file if it exists
-                    #Then unpickle it, then put it insde a list S
-                    #Then add self._save_info into list S
-                    #Then sort??? If you can! 
-                    #Then pickle that whole thang into the file
 
 class LeaderBoardScene(Scene):
     def __init__(self, scene_id, screen, background_color, title, title_color, title_size):
@@ -238,19 +233,66 @@ class LeaderBoardScene(Scene):
         press_any_key_font = pygame.font.Font(pygame.font.get_default_font(), 18)
         self._press_any_key = press_any_key_font.render('Press any key.', True, rgbcolors.black)
         (w, h) = self._screen.get_size()
-        self._title_pos = self._title.get_rect(center=(w/2, h/2))
+        self._title_pos = self._title.get_rect(center=(w/2, h/10))
         self._press_any_key_pos = self._press_any_key.get_rect(center=(w/2, h - 50))
+        self.record_font = pygame.font.Font(pygame.font.get_default_font(), 20)
+        self.record_display = self.record_font.render("Test", True, rgbcolors.black)
+        self.record_pos = self.record_display.get_rect(center=(w/2, h/6))
         self._save_info = []
+        self.has_drawn = False
+        self._display_list = []
+        self._padding_value = 30
 
     def draw(self):
         super().draw()
         self._screen.blit(self._title, self._title_pos)
         self._screen.blit(self._press_any_key, self._press_any_key_pos)
+        self._screen.blit(self.record_display, self.record_pos)
+        #self.leaderboard()
+        #self.draw_records("Fuck")
+        if self.has_drawn is False:
+            #self.draw_records("FuckToo")
+            self.leaderboard()
+            self.has_drawn = True
+        else:
+            self.draw_records()
 
     def process_event(self, event):
         super().process_event(event)
         if event.type == pygame.KEYDOWN:
             self.set_not_valid()
+
+    def leaderboard(self):
+        self.read_data() 
+        for record in self._save_info:
+            for index in record:
+                print(index)
+                self.load_records(str(index))
+                #for attr in index:
+                    #print(attr)
+                    #self.load_records(str(attr))
+
+
+
+    def load_records(self, record):
+        (w, h) = self._screen.get_size()
+        record_font = pygame.font.Font(pygame.font.get_default_font(), 24)
+        record_display = record_font.render(record, True, rgbcolors.black)
+        record_pos = record_display.get_rect(center=(w/2, h/6 + self._padding_value))
+        instance = [record_font, record_display, record_pos, self._padding_value]
+        self._display_list.append(instance)
+        self._padding_value = self._padding_value + self._padding_value
+        #self._screen.blit(record_display, record_pos)
+        
+    def draw_records(self):
+        for record in self._display_list:
+            self._screen.blit(record[1], record[2])
+
+    #def update(self):
+        
+        #if self.has_drawn is False:
+        #self.leaderboard()
+            #self.has_drawn = True
 
     def read_data(self):
         if not os.path.exists('record_data.pickle'):
