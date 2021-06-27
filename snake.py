@@ -3,7 +3,7 @@ import pygame
 import pdb
 import event_manager
 from rgbcolors import goldenrod, navyblue, cyan, purple1
-from scene import Scene, TitleScene, LevelScene
+from scene import Scene, TitleScene, LevelScene, LeaderBoardScene
 from player import Player
 from pickup import PickUp
 #from scene import Scene
@@ -42,36 +42,11 @@ def main():
 	#player2 = Player(screen, pygame.Rect(400, 434, 32, 32), background_color, True)
 	test_pickup = PickUp(screen, background_color)
 
-	#screen.blit(background, (0,0))
-	#turn_off = False
-	#while turn_off is False: 
-		#print(clock.tick(60))
-	#	clock.tick(60)
-	#	for event in pygame.event.get():
-			#print(pygame.event.get())
-	#		print(event)
-	#		player.process_events(event)
-			#player2.process_events(event)
-	#		turn_off = event_manager.process_events_exit(event)
-	#	if turn_off is None:
-	#		turn_off = False
-		
-	#	player.draw()
-	#	test_pickup.draw()
-	#	test_pickup.detect_collision(player)
-		#player2.draw()
-
-
 	#Professor's code____________
 	title = 'Snake++'
 	pygame.display.set_caption(title)
 
-	# make a player
-	# make a list of scenes
-	#this is a placeholder
- 	# this is a placeholder
-	#scene_list = [1, 2, 3, 4]
-	scene_list = [TitleScene(1, screen, goldenrod, title, navyblue, 72), LevelScene(2, screen, purple1, player)]	
+	scene_list = [TitleScene(1, screen, goldenrod, title, navyblue, 72), LevelScene(2, screen, purple1, player), LeaderBoardScene(3, screen, navyblue, "LeaderBoard", goldenrod, 72)]	
 
 	for scene in scene_list:
 		# start the scene

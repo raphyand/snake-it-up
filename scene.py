@@ -206,10 +206,6 @@ class LevelScene(Scene):
         self._save_info.append(record)
         self.write_data()
         
-
-
-
-
     def update(self):
         if self._player.dead is False:
             self.collide_boundaries()
@@ -233,3 +229,36 @@ class LevelScene(Scene):
                     #Then add self._save_info into list S
                     #Then sort??? If you can! 
                     #Then pickle that whole thang into the file
+
+class LeaderBoardScene(Scene):
+    def __init__(self, scene_id, screen, background_color, title, title_color, title_size):
+        super().__init__(scene_id, screen, background_color)
+        title_font = pygame.font.Font(pygame.font.get_default_font(), title_size)
+        self._title = title_font.render(title, True, title_color)
+        press_any_key_font = pygame.font.Font(pygame.font.get_default_font(), 18)
+        self._press_any_key = press_any_key_font.render('Press any key.', True, rgbcolors.black)
+        (w, h) = self._screen.get_size()
+        self._title_pos = self._title.get_rect(center=(w/2, h/2))
+        self._press_any_key_pos = self._press_any_key.get_rect(center=(w/2, h - 50))
+        self._save_info = []
+
+    def draw(self):
+        super().draw()
+        self._screen.blit(self._title, self._title_pos)
+        self._screen.blit(self._press_any_key, self._press_any_key_pos)
+
+    def process_event(self, event):
+        super().process_event(event)
+        if event.type == pygame.KEYDOWN:
+            self.set_not_valid()
+
+    def read_data(self):
+        if not os.path.exists('record_data.pickle'):
+        #open(filename, 'w').close()
+            print("Record file does not exist")
+        else:
+            with open('record_data.pickle', 'rb') as fh:
+                #self._save_info = pickle.load(fh)
+                self._save_info.append(pickle.load(fh))
+            print(self._save_info)
+
