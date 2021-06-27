@@ -132,9 +132,9 @@ class Player(Body):
                 self._repeat_move = 0
                 self._direction = "Right"
                 self.move_right()
-            elif event.key == pygame.K_q:
-                self.spawn_tail()
-                print("Spawn tail")
+            #elif event.key == pygame.K_q:
+            #    self.spawn_tail()
+                #print("Spawn tail")
             time.sleep(.001)
             # Block to continue moving in one direction after
             # pressing the move button once.
@@ -165,7 +165,7 @@ class Player(Body):
         tail_list = self._body_list[3:]
         for part in tail_list:
             if part.colliderect(head):
-                print("Hit self!")
+                #print("Hit self!")
                 self.dead = True
 
 

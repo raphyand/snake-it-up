@@ -114,8 +114,12 @@ class LevelScene(Scene):
         self._screen.blit(self._score_display, self._score_display_pos)
         for pickup in self._pickup_list:
             pickup.draw()
-        #print('The score is {}'.format(self._score))
-        
+        if self._player.dead is True:
+            game_over_text = "Game Over!"
+            (w, h) = self._screen.get_size()
+            game_over_display = self._score_font.render(game_over_text, True, rgbcolors.white)
+            game_over_pos = self._score_display.get_rect(center=(w/2, h/2))
+            self._screen.blit(game_over_display, game_over_pos)
 
     def process_event(self, event):
         if event.type == pygame.QUIT:
@@ -138,12 +142,31 @@ class LevelScene(Scene):
                 self._pickup_list.pop()
                 self._pickup_list.append(PickUp(self._screen, self._background_color))
     
+    def boundary(self):
+        print(self._player.get_player().top)
+        if self._player.get_player().top < 34:
+            print("Boundary Top!")
+            self._player.dead = True
+        if self._player.get_player().left < 34:
+            print("Boundary Left!")
+            self._player.dead = True
+        if self._player.get_player().right > 766:
+            print("Boundary Right!")
+            self._player.dead = True
+        if self._player.get_player().bottom > 766:
+            print("Boundary Bottom!")
+            self._player.dead = True
 
     def update(self):
         if self._player.dead is False:
             self._player.update()
-            #if self._player.is_self_intersecting()
-            #    print("You collided with yourself!")
             self._score.click()
             self._text = "Score: " + str(self._score.get_score())
             self._score_display = self._score_font.render(self._text, True, rgbcolors.white)
+            self.boundary()
+        else:
+            game_over_text = "Game Over!"
+            (w, h) = self._screen.get_size()
+            game_over_display = self._score_font.render(game_over_text, True, rgbcolors.white)
+            game_over_pos = self._score_display.get_rect(center=(w/2, h - 50))
+            self._screen.blit(game_over_display, game_over_pos)

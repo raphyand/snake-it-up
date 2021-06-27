@@ -30,7 +30,12 @@ class PickUp:
         score_counter.add_bonus(self._score_value)
 
     def detect_collision(self, player):
+        #body_list = player.get_body_list()[0:3]
+        #for part in body_list:
+        #    if self._body.colliderect(part) and self._picked_up is False:
+        #        self._picked_up = True
+        #        player.spawn_tail()
         if self._body.colliderect(player.get_player()) and self._picked_up is False:
             self._picked_up = True
             player.spawn_tail()
-            print("Collision!")
+        #    print("Collision!")
