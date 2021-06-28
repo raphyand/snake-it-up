@@ -46,7 +46,7 @@ def main():
 
     #Main Gameplay Loop
     while current_game_state is not GameState.END_MENU :
-        title = 'Snake++'
+        title = 'Snake-It-Up'
         screen = pygame.display.set_mode(window_size)
         background_color = purple1
         background = pygame.Surface(screen.get_size())

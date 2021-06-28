@@ -1,3 +1,28 @@
+# Student Info:
+Raphael S. Andaya
+
+CPSC 386-01 Intro to Game Design
+
+6/27/21
+
+raphyand@csu.fullerton.edu
+
+### General Synopsis:
+Snake-It-Up 
+
+Snake-It-Up is a Snake game clone, where you control a cyan cube snake.  The objective of the game is to accrue
+as many points as possible via staying alive and gathering little green squares, the pickups, or "apples."  
+Last as long as possible!  Avoid the boundary and your own body, as you slither your way to become a big
+snake with a lot of points!
+
+### Rules:
+1. Move in the orthogonal directions, up, left, down, right, using WASD
+2. Stay alive to gather points every three seconds.  Gather apples for a bonus 5 points.
+3. Avoid the boundaries.
+4. Avoid your own growing body.
+5. Ramp up your speed by pressing the same directional button you're traveling.
+6. Get the highest score you can!
+
 # Snake Game
 
 In this exercise, we shall write a [snake game](https://en.wikipedia.org/wiki/Snake_(video_game_genre)). The original game concept comes from the 1976 arcade game [Blockade](https://en.wikipedia.org/wiki/Blockade_(video_game)). We are starting with this well worn game concept because it is a fun game to play, introduces us to a number of key ideas in writing game software, and there exists a wealth of examples to help us get our creativity jump started.
