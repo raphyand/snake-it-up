@@ -112,9 +112,15 @@ class TitleScene(Scene):
 
         instructions5_font = pygame.font.Font(pygame.font.get_default_font(), 18)
         instructions5 = instructions5_font.render(
-            "Avoid the boundary, and your own body!", True, rgbcolors.black)
+            "Press the same direction to ramp up speed.", True, rgbcolors.black)
         instructions5_pos = instructions5.get_rect(center=(_w/2, _h/2 + 40))
         self._screen.blit(instructions5, instructions5_pos)
+
+        instructions6_font = pygame.font.Font(pygame.font.get_default_font(), 18)
+        instructions6 = instructions6_font.render(
+            "Avoid the boundary, and your own body!", True, rgbcolors.black)
+        instructions6_pos = instructions6.get_rect(center=(_w/2, _h/2 + 60))
+        self._screen.blit(instructions6, instructions6_pos)
 
     def draw(self):
         """Title Scene Subclass Draw all parts of scene"""
@@ -213,10 +219,7 @@ class LevelScene(Scene):
         for boundary in self._boundaries:
             if boundary.colliderect(self._player.get_player()):
                 self._player.dead = True
-        #print(self._player.get_player().top)
-        #print(self._player.get_player().centery)
         if self._player.get_player().top < 15 or self._player.get_player().centery < 15:
-            #pdb.set_trace()
             print("Boundary Top!")
             self._player.dead = True
         if self._player.get_player().left < 14 or self._player.get_player().centerx < 14:
@@ -233,13 +236,10 @@ class LevelScene(Scene):
         """Level Scene Subclass to read data found
         in record_data.pickle if it exists yet."""
         if not os.path.exists('record_data.pickle'):
-            #open(filename, 'w').close()
             print("Record file does not exist")
         else:
             with open('record_data.pickle', 'rb') as _f_h:
                 self._save_info = pickle.load(_f_h)
-                #self._save_info.append(pickle.load(_f_h))
-            #print(self._save_info)
 
     def write_data(self):
         """Level Scene Subclass write record of score, date,
@@ -250,10 +250,6 @@ class LevelScene(Scene):
     def game_over_info(self):
         """Level Scene Subclass execution of game over
         and save and uploading of info via pickle"""
-        #print("Game Over Info:")
-        #print("Score: " + str(self._score.get_score()))
-        #print(datetime.date.today())
-        #print(str(self._score.elapsed_time()) + " Seconds")
         score_data = self._score.get_score()
         date_data = datetime.date.today()
         time_data = self._score.elapsed_time()
@@ -305,7 +301,7 @@ class LeaderBoardScene(Scene):
         self._press_any_key_pos = self._press_any_key.get_rect(center=(_w/2, _h - 50))
         self.record_font = pygame.font.Font(pygame.font.get_default_font(), 20)
         self.record_display = self.record_font.render(
-            "_____________________________________", True, rgbcolors.black)
+            "__Score________Date____________Time Played____", True, rgbcolors.black)
         self.record_pos = self.record_display.get_rect(center=(_w/2, _h/6))
         self._save_info = []
         self.has_drawn = False
@@ -334,6 +330,8 @@ class LeaderBoardScene(Scene):
         """LeaderBoard Scene Subclass to read and load
         data from pickle file"""
         self.read_data()
+        #self._save_info[0].sort(key=lambda pq: pq[0][0][0], reverse= True)
+        #print(self._save_info[0][0])
         for record in self._save_info:
             for index in record:
                 self.load_records(str(index))

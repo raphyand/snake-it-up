@@ -7,7 +7,7 @@ __maintainer__ = 'raphyand'
 import sys
 import pygame
 from utils import GameState
-from rgbcolors import goldenrod, navyblue, purple1
+from rgbcolors import goldenrod, navyblue, purple1, orangered2, sky_blue
 from scene import TitleScene, LevelScene, LeaderBoardScene
 from player import Player
 
@@ -20,7 +20,7 @@ def display_info():
 def create_level(game_state, screen, title, player):
     """Instantiate a level based on state of the game."""
     if game_state is GameState.MAIN_MENU:
-        return TitleScene(GameState.MAIN_MENU, screen, goldenrod, title, navyblue, 72)
+        return TitleScene(GameState.MAIN_MENU, screen, orangered2, title, sky_blue, 72)
     if game_state is GameState.PLAY_LEVEL:
         return LevelScene(GameState.PLAY_LEVEL, screen,
         purple1, player)
