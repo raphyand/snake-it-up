@@ -1,4 +1,4 @@
-"""Utilties module for enumerations of AI behavior and game states"""
+"""Player Module to handle all things related to the Player"""
 __author__ = 'Raphael S. Andaya'
 __email__ = 'raphyand@csu.fullerton.edu'
 __maintainer__ = 'raphyand'

@@ -1,4 +1,4 @@
-"""Utilties module for enumerations of game states"""
+"""Utilities module for enumerations of game states"""
 __author__ = 'Raphael S. Andaya'
 __email__ = 'raphyand@csu.fullerton.edu'
 __maintainer__ = 'raphyand'

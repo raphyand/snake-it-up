@@ -1,4 +1,4 @@
-"""Utilties module for enumerations of AI behavior and game states"""
+"""Colors utility module to assist in color selection"""
 __author__ = 'Raphael S. Andaya'
 __email__ = 'raphyand@csu.fullerton.edu'
 __maintainer__ = 'raphyand'

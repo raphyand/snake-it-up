@@ -1,4 +1,4 @@
-"""Utilties module for enumerations of AI behavior and game states"""
+"""Score module to handle score system for game."""
 __author__ = 'Raphael S. Andaya'
 __email__ = 'raphyand@csu.fullerton.edu'
 __maintainer__ = 'raphyand'
