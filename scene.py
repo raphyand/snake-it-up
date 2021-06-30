@@ -8,6 +8,7 @@ import pickle
 import os
 import pygame
 import rgbcolors
+import record
 from pickup import PickUp
 from score import TimerScore
 from utils import GameState
@@ -329,12 +330,21 @@ class LeaderBoardScene(Scene):
     def leaderboard(self):
         """LeaderBoard Scene Subclass to read and load
         data from pickle file"""
+        records = record.RecordList()
         self.read_data()
+        for item in self._save_info:
+            for index in item:
+                print(index)
+                records.append(record.Record(index[0],index[1],index[2]))
+                #print(records.get_list())
         #self._save_info[0].sort(key=lambda pq: pq[0][0][0], reverse= True)
         #print(self._save_info[0][0])
-        for record in self._save_info:
-            for index in record:
-                self.load_records(str(index))
+        #for record in self._save_info:
+        #    for index in record:
+        #        self.load_records(str(index))
+        records.sort()
+        for item in records.get_list():
+            self.load_records(str(item.write_record()))
 
     def move_to_next_scene(self):
         """LeaderBoard Scene Subclass to move to
