@@ -23,22 +23,28 @@ class RecordList():
 class Record():
     """Records Class"""
     def __init__(self, score, date_time, time_elapsed):
+        """Records Class Initialization"""
         self._score = score
         self._date_time = date_time
         self._time_elapsed = time_elapsed
 
     def get_score(self):
+        """Records Class get score"""
         return self._score
 
     def get_date_time(self):
+        """Records Class get date time"""
         return self._date_time
-    
+
     def get_time_elapsed(self):
+        """Records Class get time elapsed"""
         return self._time_elapsed
 
     def write_record(self):
+        """Records Class to write out individual record"""
         write_score = str(self.get_score())
         write_date_time = str(self.get_date_time())
         write_time_elapsed = str(self.get_time_elapsed())
-        output = 'Score: ' + write_score + '| Date: ' + write_date_time + '| Time Elapsed: ' + write_time_elapsed
+        output = ('Score: ' + write_score + '| Date: ' + write_date_time + '| Time Elapsed: '
+        + write_time_elapsed)
         return output

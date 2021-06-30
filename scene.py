@@ -334,14 +334,7 @@ class LeaderBoardScene(Scene):
         self.read_data()
         for item in self._save_info:
             for index in item:
-                print(index)
                 records.append(record.Record(index[0],index[1],index[2]))
-                #print(records.get_list())
-        #self._save_info[0].sort(key=lambda pq: pq[0][0][0], reverse= True)
-        #print(self._save_info[0][0])
-        #for record in self._save_info:
-        #    for index in record:
-        #        self.load_records(str(index))
         records.sort()
         for item in records.get_list():
             self.load_records(str(item.write_record()))
